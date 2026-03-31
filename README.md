@@ -16,6 +16,15 @@ cp docs/env.example .env
 nano .env
 ```
 
+# Usage
+The API provides the following endpoints:
+| Endpoint | Variables | Description | Protection |
+| :--- | :--- | :--- | :--- |
+| /health | `none` | shows current API status including used model | `none` |
+| /explain | `violation` | sends violation prompt to llm and returns explaination | `api key` `rate limiting` |
+
+For further information look at the examples in `docs/health.txt` and `docs/explain.txt`.
+
 ## Security
 To secure this API from misuse the following mechanisms are implemented:
 * **api keys** for authentication
