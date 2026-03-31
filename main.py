@@ -89,7 +89,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"], # TODO In production, set this to the frontend URL(s)
     allow_methods=["POST", "GET"],
     allow_headers=["*", "X-API-Key"],
 )
