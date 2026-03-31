@@ -1,0 +1,6 @@
+curl -X POST http://localhost:8000/explain   -H "Content-Type: application/json"   -H "X-API-Key: [YOUR_EXPLAINERAPI_KEY]"   -d '{
+    "constraint": "data Sensitivity.Personal neverFlows vertex Location.nonEU",
+    "violated_vertex": "Database",
+    "inducing_vertex": "User",
+    "tfg": ["User", "buy", "process", "encrypt", "Database"]
+  }'
