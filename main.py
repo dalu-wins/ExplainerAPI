@@ -119,8 +119,8 @@ async def explain_violation(
     _check_rate_limit(key)
 
     logger.info(
-        "Explain request | provider=%s constraint=%r violated=%r inducing=%r",
-        _provider.name, req.constraint, req.violated_vertex, req.inducing_vertex,
+        "Explain request | provider=%s constraint=%r violated=%r inducing=%r tfg=%r",
+        _provider.name, req.constraint, req.violated_vertex, req.inducing_vertex, req.tfg,
     )
 
     user_message = build_user_message(req)
