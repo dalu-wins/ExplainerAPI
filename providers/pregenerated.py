@@ -1,15 +1,15 @@
 """
-providers/mock.py
--------------------
-Mock provider implementation.
+providers/pregenerated.py
+-------------------------
+Static provider implementation that returns pre-generated LLM explanations for research purposes.
 """
 
 import json
 
 from providers.base import LLMProvider
 
-class MockProvider(LLMProvider):
-    name = "mock"
+class PregeneratedProvider(LLMProvider):
+    name = "pregenerated"
 
     async def complete(
         self,
@@ -28,7 +28,7 @@ class MockProvider(LLMProvider):
         response_data = {
             "constraint_explanation": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
             "violation_explanation": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-            "provider": "mock",
+            "provider": "pregenerated",
             "raw_model_output": raw_text
         }
 

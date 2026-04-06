@@ -57,9 +57,6 @@ class ExplanationResponse(BaseModel):
     violation_explanation: str = Field(
         description="What the violation means concretely in this graph."
     )
-    tfg_context: str = Field(
-        description="Brief description of the affected TFG and its relevance."
-    )
     provider: str = Field(
         description="LLM provider that generated this explanation.")
     raw_model_output: Optional[str] = Field(

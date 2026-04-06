@@ -26,10 +26,12 @@ logger = logging.getLogger(__name__)
 def _build_registry() -> dict[str, type[LLMProvider]]:
     from providers.openai import OpenAIProvider
     from providers.mock import MockProvider
+    from providers.pregenerated import PregeneratedProvider
 
     return {
         "openai":   OpenAIProvider,
         "mock":     MockProvider,
+        "pregenerated": PregeneratedProvider,
     }
 
 

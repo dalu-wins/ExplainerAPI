@@ -22,12 +22,12 @@ violation. Use formal terminology where appropriate, but ensure each step of the
 violation's flow is also explained intuitively.
 
 Think step by step before writing the final answer. Structure your response \
-EXACTLY as a JSON object with these three string fields:
+EXACTLY as a JSON object with these two string fields:
   - constraint_explanation
   - violation_explanation
-  - tfg_context
 
-Output ONLY the JSON object. No preamble, no markdown fences.\
+Output ONLY the JSON object. No preamble, no markdown fences. Use our previoous \
+one-shot example as a style guide.\
 """
 
 # One-shot example  (user turn -> assistant turn)
@@ -42,7 +42,6 @@ ONE_SHOT_ASSISTANT = """\
 {
   "constraint_explanation": "The DSL constraint `data Type.Sensitive neverFlows vertex Location.nonEU` specifies that any data carrying the property `Type.Sensitive` must never reach a vertex annotated with `Location.nonEU`. This is a confidentiality rule that prohibits sensitive data from leaving the EU-bounded region of the system.",
   "violation_explanation": "A violation is detected at vertex `ExternalStorage`, which is annotated with `Location.nonEU`. Sensitive data originates at the inducing vertex `UserProfile` — carrying the property `Type.Sensitive` — and flows through `PaymentProcessor` before reaching `ExternalStorage`. Because `ExternalStorage` is the forbidden destination, the constraint is violated at this vertex.",
-  "tfg_context": "The affected Transpose Flow Graph spans four vertices: `UserProfile`, `PaymentProcessor`, `ExternalStorage`, and `ReportingService`. xDECAF traces backwards from `ExternalStorage` through the TFG to identify all upstream nodes through which the sensitive property flows, isolating the minimal context relevant to the constraint breach."
 }\
 """
 
@@ -51,7 +50,7 @@ ONE_SHOT_ASSISTANT = """\
 def build_user_message(req: ViolationRequest) -> str:
     """
     Serialise a ViolationRequest into the plain-text user message that is
-    sent to the LLM.  Both basic (tfg) and enriched (tfg_enriched) formats
+    sent to the LLM. Both basic (tfg) and enriched (tfg_enriched) formats
     are supported.
     """
     if req.tfg_enriched:
