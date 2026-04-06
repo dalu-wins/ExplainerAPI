@@ -12,7 +12,7 @@ If you only want to test locally use `--host 127.0.0.1` instead.
 When deploying fully, do not forget to set the CORS allowed origins in `main.py` accordingly.
 
 ## Configuration
-The `.env` configuration file has to be created in the projects root folder, on the same level the main.py. This project has an example for the contents of `.env` under `docs/env.example`, which you can copy and adjust to your needs.
+The `.env` configuration file has to be created in the projects root folder, on the same level the main.py. This project has an example for the contents of `.env` under `docs/.env.example`, which you can copy and adjust to your needs.
 ```bash
 cp docs/env.example .env
 nano .env
