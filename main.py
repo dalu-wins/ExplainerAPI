@@ -21,7 +21,6 @@ import config
 from auth import require_api_key
 from models import ExplanationResponse, ViolationRequest
 from parsing import parse_llm_json
-from prompt import ONE_SHOT_ASSISTANT, ONE_SHOT_USER, SYSTEM_PROMPT, build_user_message
 from providers import get_provider
 
 logger = logging.getLogger(__name__)
@@ -123,14 +122,7 @@ async def explain_violation(
         _provider.name, req.constraint, req.violated_vertex, req.inducing_vertex, req.tfg,
     )
 
-    user_message = build_user_message(req)
-
-    raw = await _provider.complete(
-        system=SYSTEM_PROMPT,
-        one_shot_user=ONE_SHOT_USER,
-        one_shot_assistant=ONE_SHOT_ASSISTANT,
-        user_message=user_message,
-    )
+    raw = await _provider.complete(req=req)
 
     parsed = parse_llm_json(raw)
 
