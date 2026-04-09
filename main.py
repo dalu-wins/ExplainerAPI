@@ -115,6 +115,7 @@ async def explain_violation(
     Accept a violation from the xDECAF frontend and return a structured
     explanation: constraint semantics, violation explaination, TFG context.
     """
+    
     _check_rate_limit(key)
 
     logger.info(
@@ -129,7 +130,6 @@ async def explain_violation(
     return ExplanationResponse(
         constraint_explanation=parsed.get("constraint_explanation", ""),
         violation_explanation=parsed.get("violation_explanation", ""),
-        tfg_context=parsed.get("tfg_context", ""),
         provider=_provider.name,
         raw_model_output=raw if config.DEBUG_RAW_OUTPUT else None,
     )

@@ -14,7 +14,7 @@ from models import ViolationRequest
 SYSTEM_PROMPT = """\
 You are an information security expert specializing in data-flow analysis. \
 You assist researchers and students working with xDECAF, \
-a tool for detecting data-flow violations in annotated program graphs using a \
+a tool for detecting data-flow violations in annotated graphs using a \
 domain-specific language (DSL) for flow constraints.
 
 Your task is to produce a clear and precise explanation of a given constraint \
@@ -27,14 +27,16 @@ EXACTLY as a JSON object with these two string fields:
   - violation_explanation
 
 Output ONLY the JSON object. No preamble, no markdown fences. Use our previoous \
-one-shot example as a style guide.\
+one-shot example as a style guide. Multiple vertices may induce a data characteristic \
+that causes the violation, and multiple vertices may be listed as the violation site. \
+Make sure to address all of them in your explanation.\
 """
 
 # One-shot example  (user turn -> assistant turn)
 ONE_SHOT_USER = """\
 Constraint (DSL): data Type.Sensitive neverFlows vertex Location.nonEU
-Violated vertex: ExternalStorage (Location.nonEU)
-Inducing vertex: UserProfile
+Violated vertices: [ExternalStorage]
+Inducing vertices: [UserProfile]
 TFG vertices: [UserProfile, PaymentProcessor, ExternalStorage, ReportingService]\
 """
 
@@ -50,23 +52,14 @@ ONE_SHOT_ASSISTANT = """\
 def build_user_message(req: ViolationRequest) -> str:
     """
     Serialise a ViolationRequest into the plain-text user message that is
-    sent to the LLM. Both basic (tfg) and enriched (tfg_enriched) formats
-    are supported.
+    sent to the LLM.
     """
-    if req.tfg_enriched:
-        lines = [
-            f"  - {v.name} "
-            f"| in: [{', '.join(v.incoming_properties)}] "
-            f"| out: [{', '.join(v.outgoing_properties)}]"
-            for v in req.tfg_enriched
-        ]
-        tfg_section = "TFG vertices (enriched):\n" + "\n".join(lines)
-    else:
-        tfg_section = f"TFG vertices: [{', '.join(req.tfg)}]"
+    
+    tfg_section = f"TFG vertices: [{', '.join(req.tfg)}]"
 
     return (
         f"Constraint (DSL): {req.constraint}\n"
-        f"Violated vertex: {req.violated_vertex}\n"
-        f"Inducing vertex: {req.inducing_vertex}\n"
-        f"{tfg_section}"
+        f"Violated vertices: {req.violated_vertex}\n"
+        f"Inducing vertices: {req.inducing_vertex}\n"
+        f"TFG vertices: {tfg_section}"
     )
