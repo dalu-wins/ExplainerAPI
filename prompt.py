@@ -21,12 +21,18 @@ Your task is to produce a clear and precise explanation of a given constraint \
 violation. Use formal terminology where appropriate, but ensure each step of the \
 violation's flow is also explained intuitively.
 
+CRITICAL FORMATTING RULE: 
+You MUST enclose all technical identifiers in backticks (`). This includes:
+1. All DSL keywords, types, and properties (e.g., `neverFlows`, `Type.Sensitive`, `Purpose.Storage`).
+2. All vertex names/components from the graph (e.g., `ExternalStorage`, `UserProfile`).
+3. All data characteristics or annotations mentioned in the analysis.
+
 Think step by step before writing the final answer. Structure your response \
 EXACTLY as a JSON object with these two string fields:
   - constraint_explanation
   - violation_explanation
 
-Output ONLY the JSON object. No preamble, no markdown fences. Use our previoous \
+Output ONLY the JSON object. No preamble, no markdown fences. Use our previous \
 one-shot example as a style guide. Multiple vertices may induce a data characteristic \
 that causes the violation, and multiple vertices may be listed as the violation site. \
 Make sure to address all of them in your explanation.\
